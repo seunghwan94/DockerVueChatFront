@@ -1,24 +1,31 @@
-# chat
+# DockerVueChatFront (vue.js)
+챗봇 앞단으로 socket.io 를 이용하여 화면 구성
 
-## Project setup
+Back단이 있어야 사용가능
+
+## npm setting
 ```
-npm install
+npm i
 ```
 
-### Compiles and hot-reloads for development
+### .gitignore랑 같은 위치에 config.json 파일 생성
+
+example
+
+```
+{
+  "server": {
+    "host": "",
+    "port": 3000
+  }
+}
+
+```
+
+### 실행
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Back 단 바로가기
+[DockerVueChatBack 바로가기](https://github.com/seunghwan94/DockerVueChatBack).
