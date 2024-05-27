@@ -3,6 +3,8 @@
 
 Back단이 있어야 사용가능
 
+[DockerVueChat notion 바로가기](https://www.notion.so/DockerVueChat-ba27ae64d28e47d48b2dacaa89e81fdf?pvs=4)
+
 ## npm setting
 ```
 npm i
