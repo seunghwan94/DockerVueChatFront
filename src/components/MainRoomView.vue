@@ -1,15 +1,6 @@
 <template>
   <div v-if="RoomNumber" class="main-room-contain-y">
       <MainRoomMsgView :id="name" :msgList="msgList"/>
-      <!-- <div class="text-contain">
-          <div style="width:80%;">
-              <textarea type="text" class="textarea-input" v-model="messageText" @keydown.enter.prevent="onEnter"></textarea>
-          </div>
-          <div style="width:20%;">
-              <button type="button" class="send-button" @click="sendMsg"><font-awesome-icon class="icon" :icon="['fas', 'arrow-up']" size="2xl"/></button>
-          </div>
-
-      </div> -->
 
       <div class="text-contain">
           <textarea class="textarea-input" v-model="messageText" @keydown.enter.prevent="onEnter"></textarea>
@@ -38,11 +29,7 @@ export default {
   },
   data(){
       return {
-          msgList: [
-              // {sender:'bot', text:'test', img:'user.png', id:'bot_id'},
-              // {sender:'you', text:'test', img:'cat.png', id:'you_id'},
-              // {sender:'me', text:'test', img:'dog.png', id:'my_id'}
-          ],
+          msgList: [],
           socket: null,
           id: this.profileList[0].user_id,
           img: this.profileList[0].img,
@@ -99,7 +86,7 @@ export default {
 
       loadMsgList() {
         const selectData = {
-          user_id: this.name,
+          user_name: this.name,
           room : this.room
         }
 
@@ -190,6 +177,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+  border-radius: 5px;
 }
 .msg-list {
   flex-grow: 1;

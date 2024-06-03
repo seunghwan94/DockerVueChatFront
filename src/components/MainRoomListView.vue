@@ -1,8 +1,8 @@
 <template>
-    <div class="main-user-contain" @click="$emit('join_room',list.room,otherList)">
-        <img :src="require(`../assets/img/${otherList.img}`)" style="width: 10%; border-radius: 50%;">
+    <div class="main-user-contain" @click="$emit('join_room',list)">
+        <img :src="list? require(`../assets/img/${list.other_user_img}`): ''" style="width: 10%; border-radius: 50%;">
         <div class="room-contants">
-            <p class="room-title"> {{ otherList.name }} </p>
+            <p class="room-title"> {{ list? list.other_user_name : '' }} </p>
         </div>
     </div>
 </template>
@@ -12,7 +12,6 @@
 export default {
     props:{
         list: Object,
-        otherList: Array,
     }
 }
 

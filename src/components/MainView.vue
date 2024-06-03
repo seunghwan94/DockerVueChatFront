@@ -10,12 +10,10 @@
             <h2 style="padding-right: 20px;">{{ profileList.length > 0 ? profileList[0].name : '' }}</h2>
         </div>
 
-        <div v-if="is_set==0" class="main-body">
-            <MainRoomListView v-for="(a, i) in chatList" :key="i" :list="a" 
-                :otherList="getOtherUser(a.other_user_id)" 
-                @join_room="join_room"/>
-        </div>
 
+        <div v-if="is_set==0" class="main-body">
+            <MainRoomListView v-for="(a, i) in chatList" :key="i" :list="a" @join_room="join_room"/>
+        </div>
         <div v-if="is_set==1" class="main-body">
             <MainRoomView :RoomNumber="RoomNumber" :profileList="profileList" :otherUser="otherUser"/>
         </div>
@@ -27,12 +25,15 @@
             <MainProfileView v-for="(a, i) in profileList" :key="i" :list="a" @profileEdit="profileEdit"/>
         </div>
 
+
         <div class="main-footer">
             <font-awesome-icon class="icon" :icon="['fas', 'bars']" size="2xl" @click="is_set=0"/>
             <font-awesome-icon class="icon" :icon="['fas', 'comment']" flip="horizontal" size="2xl" @click="is_set=1"/>
             <font-awesome-icon class="icon" :icon="['fas', 'magnifying-glass']" size="2xl" @click="is_set=2"/>
             <font-awesome-icon class="icon" :icon="['fas', 'user']" size="2xl" @click="is_set=3"/>
         </div>
+
+
     </div>
 </template>
 
@@ -49,13 +50,12 @@ export default {
     data() {
         return {
             id: sessionStorage.getItem('id'),
-            pw: sessionStorage.getItem('pw'),
             profileList: [],
             userList: [],
             chatList: [],
             otherUser: [{}],
             RoomNumber: '',
-            is_set: 0,
+            is_set: 3,
         };
     },
     mounted() {
@@ -63,12 +63,17 @@ export default {
         this.loadUserList();
         this.loadChatList();
     },
+    watch: {
+        is_set(newValue) {
+            if (newValue === 0) {
+                this.loadChatList();
+            }
+        }
+    },
     methods: {
-        getOtherUser(user_id) {
-            return this.userList.find(user => user.user_id == user_id)
-        },
         profileEdit(updatedUser) {
             // 업데이트된 사용자 정보를 처리
+            console.log(updatedUser);
             alert('회원 정보를 변경 하시겠습니까?');
             
             axios.post(BackURL+'/updateProfile', updatedUser)
@@ -82,12 +87,12 @@ export default {
                     console.error('Error updating profile:', error);
                 });
         },
-        join_room(roomNumber,OtherUserList) {
-
-            this.RoomNumber=roomNumber;
+        join_room(list) {
+            console.log(list)
+            this.RoomNumber=list.room;
             this.otherUser= [{
-                                user_id : OtherUserList.name,
-                                img : OtherUserList.img
+                                user_id : list.other_user_name,
+                                img : list.other_user_img
                             }]
             this.is_set=1;
             
@@ -95,9 +100,9 @@ export default {
         join_room_ck(otherUser) {
             if(confirm(otherUser.name+' 님이랑 대화를 하시겠습니까?')){
                 const userData = {
-                    myid: this.profileList[0].user_id,
+                    myid: this.profileList[0].id,
                     myimg: this.profileList[0].img,
-                    otherid: otherUser.user_id,
+                    otherid: otherUser.id,
                     otherimg: otherUser.img,
                 };                
 
@@ -119,7 +124,6 @@ export default {
         loadProfile() {
             const userData = {
                 id: this.id,
-                pw: this.pw,
             };
 
             axios.post(BackURL+'/loadProfile', userData)
@@ -156,6 +160,7 @@ export default {
             .then(response => {
                 if (response.data.length > 0) {
                     this.chatList = response.data;
+                    console.log(this.chatList)
                 }
             })
             .catch(error => {
@@ -185,7 +190,7 @@ export default {
 .main-header {
     display: flex;
     border-radius: 5px 5px 0 0;
-    background: #3c8fdd;
+    background: #FCF6F1;
     padding: 15px;
     align-items: center;
 }
@@ -196,13 +201,15 @@ export default {
     display: flex;
     justify-content: space-around;
     border-radius: 0 0 5px 5px;
-    background: #3c8fdd;
+    background: #FCF6F1;
     padding: 20px 0;
     align-items: center;
 }
 .main-body {
     width: 100%;
-    height: 92%;
+    height: 88%;
+    background: #cbdced;
+    border-radius: 5px 5px 0 0;
 }
 
 .icon {

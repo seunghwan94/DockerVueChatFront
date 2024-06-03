@@ -1,7 +1,7 @@
 <template>
     <div class="main-profile-contain">
         <img :src="require(`../assets/img/${user.img}`)" @click="showModal = true" style="width:40%; border-radius: 50%; cursor: pointer;">
-        <h2 style="margin:0px">{{ user.name }}</h2>
+        <!-- <h2 style="margin:0px">{{ user.name }}</h2> -->
         <div style="display: flex; flex-direction: column; align-items: center;">
             <div class="login-group">
                 <span>ID</span>
@@ -72,6 +72,6 @@ export default {
     background: #cbdced;
     padding: 15px;
     align-items: center;
-    height: 100%;
+    height: 95%;
 }
 </style>

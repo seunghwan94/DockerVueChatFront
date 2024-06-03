@@ -51,7 +51,6 @@ export default {
             pw:'',
             is_set:0,
             error: '',
-            imgList:['cat.png','dog.png','duncky.png','shape.png','snake.png'],
         }
     },
     methods:{
@@ -71,9 +70,10 @@ export default {
 
             axios.post(BackURL+'/login', userData)
             .then(response => {
-                console.log('로그인 성공:', response.data);
-                sessionStorage.setItem('id',this.id);
-                sessionStorage.setItem('pw',this.pw);
+                console.log(response.data[0].id)
+                sessionStorage.setItem('id', response.data[0].id);
+                sessionStorage.setItem('user_id',this.id);
+                sessionStorage.setItem('user_pw',this.pw);
             
                 this.$router.push('/chat/main');
             })
